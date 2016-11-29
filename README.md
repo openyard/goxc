@@ -1,5 +1,5 @@
-paragon
-=======
+PARAGON 
+=========
 
 An attempt to create, develop, manage and maintain software-products in the 21st century.
 
