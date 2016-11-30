@@ -1,6 +1,6 @@
 before_script:
     - export WD=`pwd`
-    - expotr GOROOT="/opt/google/go-1.7.1"
+    - export GOROOT="/opt/google/go-1.7.1"
     - export GOPATH="$WD/vendor:$WD"
 
 stages:
