@@ -24,7 +24,7 @@ An attempt to create, develop, manage and maintain software-products in the 21st
 
 further information: http://chris.beams.io/posts/git-commit/
 
-### structure
+#### structure
 
 ```
 <type>(<scope>): <subject>
@@ -34,7 +34,7 @@ further information: http://chris.beams.io/posts/git-commit/
 <footer>
 ```
 
-### types
+#### types
 
 - feat (feature)
 - fix (bugfix)
@@ -44,7 +44,7 @@ further information: http://chris.beams.io/posts/git-commit/
 - refactor (refactoring)
 - chore (general
 
-### scopes
+#### scopes
 
 - module name
 - client/customer name
@@ -60,20 +60,20 @@ see also:
 - http://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow
 - http://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 
-### branch naming convention
+#### branch naming convention
 
-- main branches: master, develop
-- feature branches: feature-*
-- release branches: release-*
-- hotfix branches: hotfix-*
+- main branches: **master, develop**
+- feature branches: __feature-*__
+- release branches: __release-*__
+- hotfix branches: __hotfix-*__
 
-### develop
+#### develop
 
 - create new feature branch
 
 ```
-$git checkout -b feature-xyz develop
-$git push origin feature-xyz
+$ git checkout -b feature-xyz develop
+$ git push origin feature-xyz
 ```
 
 - finish feature branch
@@ -90,9 +90,10 @@ $ git push origin develop
 ```
 
 > The --no-ff flag causes the merge to always create a new commit object, even if the merge could be performed with a fast-forward. This avoids losing information about the historical existence of a feature branch and groups together all commits that together added the feature.
+
 > Yes, it will create a few more (empty) commit objects, but the gain is much bigger than the cost.
 
-### release
+#### release
 
 - create new release branch
 
@@ -130,7 +131,7 @@ $ git branch -d release-1.2
 Deleted branch release-1.2 (was ff452fe).
 ```
 
-### hotfix
+#### hotfix
 
 - create new hotfix branch
 
