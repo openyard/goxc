@@ -1,0 +1,16 @@
+before_script:
+    - export WD=`pwd`
+    - export GOPATH="$WD/vendor:$WD"
+
+stages:
+    - compile
+
+goxc_build:
+    stage: compile
+    script:
+        - mkdir -p bin
+        - cd bin
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_PIPELINE_ID}" ../src/go/goxc
+    artifacts:
+        paths:
+            - bin/goxc
