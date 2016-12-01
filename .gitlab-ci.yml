@@ -13,14 +13,14 @@ goxc_build:
         - mkdir -p bin
         - cd bin
         - go get github.com/fzipp/gocyclo
-        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_REF_NAME}-`echo ${CI_BUILD_REF} | cut -c1-8` -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_REF_NAME}-${CI_BUILD_ID}-`echo ${CI_BUILD_REF} | cut -c1-8` -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
         - go test -cover -v ../src/go/goxc
         - go tool vet -all -v ../src/go/goxc
         - gocyclo -over 10 ../src/go/goxc
     artifacts:
         paths:
             - bin/goxc
-        name: "goxc-${CI_BUILD_REF_NAME}-`echo ${CI_BUILD_REF} | cut -c1-8`"
+        name: "goxc-${CI_BUILD_REF_NAME}-${CI_BUILD_ID}-`echo ${CI_BUILD_REF} | cut -c1-8`"
         expire_in: 1 week
         when: on_success
     except:
@@ -31,11 +31,11 @@ goxc_release_build:
     script:
         - mkdir -p bin
         - cd bin
-        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=`echo \"${CI_BUILD_TAG}\" | sed -e 's/goxc-//'` -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=`echo \"${CI_BUILD_TAG}\" | sed -e 's/goxc-//'`-${CI_BUILD_ID} -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
     artifacts:
         paths:
             - bin/goxc
-        name: "${CI_BUILD_TAG}"
+        name: "${CI_BUILD_TAG}-${CI_BUILD_ID}"
         when: on_success
     only:
         - tags
