@@ -12,10 +12,27 @@ goxc_build:
     script:
         - mkdir -p bin
         - cd bin
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_REF_NAME} -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
+    artifacts:
+        paths:
+            - bin/goxc
+        name: "goxc-${CI_BUILD_REF_NAME}"
+        expire_in: 1 week
+        when: on_success
+    except:
+        - tags
+
+goxc_release_build:
+    stage: compile
+    script:
+        - mkdir -p bin
+        - cd bin
         - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_TAG} -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
     artifacts:
         paths:
             - bin/goxc
-        name: "goxc-${CI_BUILD_REF}"
-        expire_in: 1 week
+        name: "${CI_BUILD_TAG}"
         when: on_success
+    only:
+        - tags
+        - /^goxc-*$/
