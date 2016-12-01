@@ -12,6 +12,7 @@ goxc_build:
     script:
         - mkdir -p bin
         - cd bin
+        - go get github.com/fzipp/gocyclo
         - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_REF_NAME}-`echo ${CI_BUILD_REF} | cut -c1-8` -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
         - go test -cover -v ../src/go/goxc
         - go tool vet -all -v ../src/go/goxc
