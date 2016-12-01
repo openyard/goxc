@@ -9,7 +9,11 @@ import (
 	"os"
 )
 
-const Version = "TRUNK"
+var (
+	version = "TRUNK"
+	rev     = "unknown"
+	built   = "19990101-235959"
+)
 
 func main() {
 	var schemaFile = flag.String("schema", "", "the XSD schema file to parse")
@@ -17,7 +21,9 @@ func main() {
 	flag.Parse()
 
 	if *printVersion {
-		fmt.Printf("goxc v%s\n\n", Version)
+		fmt.Printf("goxc v%s\n", version)
+		fmt.Printf(" rev  : %s\n", rev)
+		fmt.Printf(" built: %s\n\n", built)
 		os.Exit(0)
 	}
 	file := *schemaFile

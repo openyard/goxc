@@ -12,7 +12,7 @@ goxc_build:
     script:
         - mkdir -p bin
         - cd bin
-        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_REF}" ../src/go/goxc
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_TAG} -X main.rev=${CI_BUILD_REF} -X main.built=`date -u +%Y%m%d-%H%M%S`" ../src/go/goxc
     artifacts:
         paths:
             - bin/goxc
