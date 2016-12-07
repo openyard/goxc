@@ -1,0 +1,24 @@
+package {{.PackageName}}
+
+{{range .Imports -}}
+    import {{.Alias}} "{{.Package}}"
+{{end -}}
+// complex type
+type {{.Name}} struct {
+    {{.Base}}
+    {{range .Attributes}}
+        {{- .TypeName}} {{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
+    {{end -}}
+    {{range .Elements}}
+        {{- .TypeName}} {{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
+    {{end -}}
+    {{range .Refs}}
+        {{- .TypeName}} {{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
+    {{end -}}
+    {{range .AttributeGroups}}
+        {{- .Ref}}
+    {{end -}}
+    {{range .Any}}
+        Any []*w3c.Any
+    {{end -}}
+}
