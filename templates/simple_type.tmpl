@@ -1,8 +1,8 @@
 package {{.PackageName}}
+
 {{range .Imports}}
     import {{.Alias}} "{{.Package}}"
 {{end}}
-// attribute type
-type {{.TypeName}} struct {
-	Value {{.Type}} `xml:"{{.Name}},attr"`
-}
+
+// simple type
+type {{.Name}} {{.Type}}

@@ -1,9 +1,0 @@
-package {{.PackageName}}
-
-type {{.Name}} struct {
-{{with .Elements}}
-    {{range .}}
-	{{.Name}} {{.Type}} `xml:"{{.Name}}"`
-    {{end}}
-{{end}}
-}

@@ -1,0 +1,15 @@
+package {{.PackageName}}
+
+{{range .Imports -}}
+    import {{.Alias}} "{{.Package}}"
+{{end}}
+// complex element
+type {{.Name}} struct {
+    Value {{.Base}} `xml:",chardata"`
+    {{range .Attributes}}
+        {{- .TypeName}} {{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
+    {{end}}
+    {{range .AttributeGroups}}
+        {{- .Ref}}
+    {{end -}}
+}
