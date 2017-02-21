@@ -7,7 +7,7 @@ type Extension struct {
 	Base                      string          `xml:"base,attr"`
 	Sequence                  *Sequence       `xml:"sequence,omitempty"`
 	Attributes                []*Attribute    `xml:"attribute,omitempty"`
-	AttributeGroup            *AttributeGroup `xml:"attributeGroup,omitempty`
+	AttributeGroup            *AttributeGroup `xml:"attributeGroup,omitempty"`
 	PackageName, Parent, Name string
 }
 

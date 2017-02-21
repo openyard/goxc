@@ -17,17 +17,17 @@ func TestAppend(t *testing.T) {
 	}
 	sample := imports[0]
 	if sample.Alias != "foo" {
-		t.Error("expected 'foo' got %s", sample.Alias)
+		t.Errorf("expected 'foo' got %s", sample.Alias)
 	}
 	if sample.Package != "bar" {
-		t.Error("expected 'bar' got %s", sample.Package)
+		t.Errorf("expected 'bar' got %s", sample.Package)
 	}
 	sample = imports[1]
 	if sample.Alias != "bar" {
-		t.Error("expected 'bar' got %s", sample.Alias)
+		t.Errorf("expected 'bar' got %s", sample.Alias)
 	}
 	if sample.Package != "foo" {
-		t.Error("expected 'foo' got %s", sample.Package)
+		t.Errorf("expected 'foo' got %s", sample.Package)
 	}
 }
 
