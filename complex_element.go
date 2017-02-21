@@ -1,7 +1,6 @@
 package goxc
 
 type ComplexElement struct {
-	Class
 	PackageName, Parent string
 	ComplexType         *ComplexType
 }
@@ -45,7 +44,7 @@ func (ce *ComplexElement) Generate(targetPrefix string, namespaces map[string]st
 		a.Type = Replace(targetPrefix, a.Type)
 		ce.ComplexType.Imports = Append(ce.ComplexType.Imports, a.Type, namespaces)
 	}
-	ce.Version = version
-	ce.Rev = rev
+	ce.ComplexType.Version = version
+	ce.ComplexType.Rev = rev
 	generateStruct(ce.ComplexType, "templates/complex_element.tmpl", ce.PackageName, ce.ComplexType.Name, "element with complexType")
 }
