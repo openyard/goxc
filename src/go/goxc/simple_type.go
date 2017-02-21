@@ -6,6 +6,7 @@ import (
 )
 
 type SimpleType struct {
+	Class
 	XMLName                   xml.Name     `xml:"simpleType"`
 	Name                      string       `xml:"name,attr"`
 	Annotation                *Annotation  `xml:"annotation,omitempty"`
@@ -17,6 +18,8 @@ type SimpleType struct {
 }
 
 func (s *SimpleType) Generate(targetPrefix string, namespaces map[string]string) {
+	s.Version = version
+	s.Rev = rev
 	if s.isRestriction() {
 		if s.Restriction.isEnumeration() {
 			s.prepareRestriction(targetPrefix)

@@ -6,6 +6,7 @@ import (
 )
 
 type Restriction struct {
+	Class
 	XMLName                   xml.Name        `xml:"restriction"`
 	Base                      string          `xml:"base,attr"`
 	Length                    *Length         `xml:"length,omitempty"`
@@ -52,5 +53,7 @@ func (r *Restriction) prepareEnumeration() {
 }
 
 func (r *Restriction) generateEnumeration() {
+	r.Version = version
+	r.Rev = rev
 	generateStruct(r, "templates/enumeration.tmpl", r.PackageName, r.Parent+r.Name, "enumeration")
 }

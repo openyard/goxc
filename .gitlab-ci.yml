@@ -22,7 +22,7 @@ goxc_build:
         - go get -v github.com/fzipp/gocyclo
         - go test -cover -v ../src/go/goxc
         - gocyclo -over 10 ../src/go/goxc
-        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=${CI_BUILD_REF_NAME}-${BUILD_NUMBER} -X main.rev=${CI_BUILD_REF} -X main.built=${BUILD_STAMP}" -o goxc ../src/go/goxc/main/
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X go/goxc.version=${CI_BUILD_REF_NAME}-${BUILD_NUMBER} -X go/goxc.rev=${CI_BUILD_REF} -X go/goxc.built=${BUILD_STAMP}" -o goxc ../src/go/goxc/main/
         - go install ../src/go/goxc/main/
         - go tool vet -v -all -composites=false -shadow=true ../src/go/goxc/..
     artifacts:
@@ -39,7 +39,7 @@ goxc_release_build:
     script:
         - mkdir -p bin
         - cd bin
-        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X main.version=`echo \"${CI_BUILD_TAG}\" | sed -e 's/goxc-//'` -X main.rev=${CI_BUILD_REF} -X main.built=${BUILD_STAMP}" -o goxc ../src/go/goxc/main
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X go/goxc.version=`echo \"${CI_BUILD_TAG}\" | sed -e 's/goxc-//'` -X go/goxc.rev=${CI_BUILD_REF} -X go/goxc.built=${BUILD_STAMP}" -o goxc ../src/go/goxc/main
     artifacts:
         paths:
             - bin/goxc

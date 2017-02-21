@@ -5,15 +5,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"go/goxc"
-	"strings"
-)
-
-var (
-	version = "TRUNK"
-	rev     = "unknown"
-	built   = "19990101-235959"
 )
 
 func main() {
@@ -23,9 +17,9 @@ func main() {
 	flag.Parse()
 
 	if *printVersion {
-		fmt.Printf("goxc %s\n", version)
-		fmt.Printf(" rev     : %s\n", rev)
-		fmt.Printf(" built   : %s\n\n", built)
+		fmt.Printf("goxc %s\n", goxc.Version())
+		fmt.Printf(" rev     : %s\n", goxc.Rev())
+		fmt.Printf(" built   : %s\n\n", goxc.Built())
 		os.Exit(0)
 	}
 	file := *schemaFile

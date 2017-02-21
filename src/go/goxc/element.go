@@ -40,12 +40,12 @@ func (e *Element) Generate(targetPrefix string, namespaces map[string]string) {
 		e.Imports = append(e.Imports, ce.ComplexType.Imports...)
 	} else if e.isAbstract() {
 		e.Base = e.Type
-		a := &Abstract{e.PackageName, e.TypeName}
+		a := &Abstract{PackageName: e.PackageName, Name: e.TypeName}
 		a.Generate(targetPrefix)
 	} else if e.Name != "" { // && !IsBaseType(e.Type)
 		e.Base = Replace(targetPrefix, e.Type)
 		e.Imports = Append(e.Imports, e.Base, namespaces)
-		se := &SimpleElement{e.PackageName, e.TypeName, e.Type, e.Imports}
+		se := &SimpleElement{PackageName: e.PackageName, Name: e.TypeName, Type: e.Type, Imports: e.Imports}
 		se.Generate(targetPrefix)
 	} else {
 		e.Base = Replace(targetPrefix, e.Ref)
