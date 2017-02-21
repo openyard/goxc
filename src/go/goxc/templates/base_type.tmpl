@@ -1,0 +1,9 @@
+// Generated with goxc v{{.Version}} - rev {{.Rev}}
+package {{.PackageName}}
+
+{{range .Imports}}
+    import {{.Alias}} "{{.Package}}"
+{{end}}
+
+// base type
+type {{.Name}} {{.Type}}

@@ -1,0 +1,10 @@
+// Generated with goxc v{{.Version}} - rev {{.Rev}}
+package {{.PackageName}}
+
+import "encoding/xml"
+
+// any type
+type Any struct {
+    XMLName xml.Name
+    Content string   `xml:",innerxml,omitempty"`
+}

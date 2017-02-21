@@ -1,0 +1,12 @@
+// Generated with goxc v{{.Version}} - rev {{.Rev}}
+package {{.PackageName}}
+{{range .Imports}}
+import {{.Alias}} "{{.Package}}"
+{{end}}
+type {{.Parent}}{{.Name}} {{.Base}}
+
+const (
+{{range .Enumerations}}
+    {{- .Name}}_{{.TypeName}} {{.Name}} = "{{.Value}}"
+{{end -}}
+)
