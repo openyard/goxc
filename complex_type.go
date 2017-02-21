@@ -3,6 +3,7 @@ package goxc
 import "encoding/xml"
 
 type ComplexType struct {
+	Class
 	XMLName         xml.Name          `xml:"complexType"`
 	Name            string            `xml:"name,attr"`
 	Annotation      *Annotation       `xml:"annotation,omitempty"`
@@ -95,6 +96,8 @@ func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string
 			c.Imports = Append(c.Imports, "w3c.Any", namespaces)
 		}
 	}
+	c.Version = version
+	c.Rev = rev
 	generateStruct(c, "templates/complex_type.tmpl", c.PackageName, c.Name, "complexType")
 }
 

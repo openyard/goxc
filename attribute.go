@@ -6,6 +6,7 @@ import (
 )
 
 type Attribute struct {
+	Class
 	XMLName           xml.Name    `xml:"attribute"`
 	Name              string      `xml:"name,attr"`
 	Type              string      `xml:"type,attr"`
@@ -28,6 +29,8 @@ func (a *Attribute) Generate(targetPrefix string, namespaces map[string]string) 
 	} else {
 		a.prepareMe(targetPrefix, namespaces)
 	}
+	a.Version = version
+	a.Rev = rev
 	generateStruct(a, "templates/attribute.tmpl", a.PackageName, a.TypeName, "attribute")
 }
 
