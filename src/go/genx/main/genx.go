@@ -2,15 +2,16 @@ package main
 
 import (
 	"encoding/csv"
-	"os"
 	"flag"
 	"fmt"
-	"go/genx"
 	"strconv"
+	"os"
+
+	"go/genx"
 )
 
 func main() {
-	var source = flag.String("s", "", "source file name")
+	var source = flag.String("s", "/home/tkuchs/Develop/paragon/src/go/genx/main/test.csv", "source file name")
 	var dest = flag.String("d", "com_objects.csv", "destination file name")
 	flag.Parse()
 
@@ -29,24 +30,52 @@ func main() {
 
 	r := csv.NewReader(f)
 	r.Comma = ';'
-	r.FieldsPerRecord = 6
+	r.FieldsPerRecord = 7
 
 	w := csv.NewWriter(d)
 	w.Comma = ';'
+	defer w.Flush()
 
 	records, err := r.ReadAll()
+	if err != nil {
+		fmt.Printf("could not read sample file: %s", err.Error())
+		return
+	}
+	var floors map[string]*genx.Floor = make(map[string]*genx.Floor, 0)
+	var currentFloor string
+	currentFloorNumber := 0
 	for _, r := range records {
-		lights, err := strconv.Atoi(r[1])
-		shutters, err := strconv.Atoi(r[2])
-		heating, err := strconv.Atoi(r[3])
-		sockets, err := strconv.Atoi(r[4])
-		reedContacts, err := strconv.Atoi(r[5])
+		if currentFloor == "" || currentFloor != r[0] {
+			currentFloor = r[0]
+			currentFloorNumber++
+		}
+		lights, err := strconv.Atoi(r[2])
+		shutters, err := strconv.Atoi(r[3])
+		heating, err := strconv.Atoi(r[4])
+		sockets, err := strconv.Atoi(r[5])
+		reedContacts, err := strconv.Atoi(r[6])
+
 		if err != nil {
 			fmt.Printf("could not read input: %s", err.Error())
 			os.Exit(3)
 		}
-		room := genx.NewRoom(r[0], lights, shutters, heating, sockets, reedContacts)
-		room.Generate(w)
+
+		room := genx.NewRoom(r[1], lights, shutters, heating, sockets, reedContacts)
+		f, ok := floors[currentFloor]
+		if ok {
+			f.Rooms = append(f.Rooms, room)
+		} else {
+			newFloor := genx.NewFloor(currentFloor, currentFloorNumber, room)
+			floors[currentFloor] = newFloor
+		}
+	}
+	w.Write([]string{"Main", "Middle", "Sub", "Main", "Middle", "Sub", "Central", "Unfiltered", "Description", "DatapointType", "Security"})
+	w.Write([]string{"", "", "", "0"})
+	w.Write([]string{"", "", "", "0", "0"})
+	w.Write([]string{"", "", "", "0", "0"})
+	w.Write([]string{"", "", "", "0", "0", "1"})
+	for _, floor := range floors {
+		floor.Generate(w, genx.Actuators[genx.MDT])
 	}
 
 }
