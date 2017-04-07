@@ -1,6 +1,7 @@
 package mdt
 
 type AKSxx1603 struct {
+	Socket bool
 }
 
 func (a *AKSxx1603) Functions() []string {
@@ -28,5 +29,8 @@ func (a *AKSxx1603) Functions() []string {
 }
 
 func (a *AKSxx1603) Prefix() string {
+	if a.Socket {
+		return "S"
+	}
 	return "L"
 }

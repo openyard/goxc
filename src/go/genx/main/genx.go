@@ -4,14 +4,14 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
-	"strconv"
 	"os"
+	"strconv"
 
 	"go/genx"
 )
 
 func main() {
-	var source = flag.String("s", "/home/tkuchs/Develop/paragon/src/go/genx/main/test.csv", "source file name")
+	var source = flag.String("s", "in.csv", "source file name")
 	var dest = flag.String("d", "com_objects.csv", "destination file name")
 	flag.Parse()
 
