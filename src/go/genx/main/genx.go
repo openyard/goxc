@@ -44,7 +44,11 @@ func main() {
 	var floors map[string]*genx.Floor = make(map[string]*genx.Floor, 0)
 	var currentFloor string
 	currentFloorNumber := 0
-	for _, r := range records {
+	for i, r := range records {
+		if i == 0 {
+			// skip header
+			continue
+		}
 		if currentFloor == "" || currentFloor != r[0] {
 			currentFloor = r[0]
 			currentFloorNumber++

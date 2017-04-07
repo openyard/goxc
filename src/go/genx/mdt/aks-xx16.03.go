@@ -1,9 +1,9 @@
 package mdt
 
-type AKS201603 struct {
+type AKSxx1603 struct {
 }
 
-func (a *AKS201603) Functions() []string {
+func (a *AKSxx1603) Functions() []string {
 	return []string{
 		"Schalten_1B",
 		"Treppenlicht_1B",
@@ -25,4 +25,8 @@ func (a *AKS201603) Functions() []string {
 		"Logik_1_1B",
 		"Logik_2_1B",
 	}
+}
+
+func (a *AKSxx1603) Prefix() string {
+	return "L"
 }
