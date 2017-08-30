@@ -23,7 +23,7 @@ type Restriction struct {
 }
 
 func (r *Restriction) Generate(targetPrefix string, namespaces map[string]string) {
-	r.Base = Replace(targetPrefix, r.Base)
+	r.Base = Replace(targetPrefix, r.Base, namespaces)
 	r.Imports = Append(r.Imports, r.Base, namespaces)
 	if r.isEnumeration() {
 		r.prepareEnumeration()

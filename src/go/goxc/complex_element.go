@@ -15,7 +15,7 @@ func (ce *ComplexElement) Generate(targetPrefix string, namespaces map[string]st
 	ce.ComplexType.Attributes = make([]*Attribute, 0)
 	ce.ComplexType.AttributeGroups = make([]*AttributeGroup, 0)
 	ce.ComplexType.PackageName = ce.PackageName
-	ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.Base)
+	ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.Base, namespaces)
 	if ce.ComplexType.SimpleContent != nil {
 		ce.ComplexType.SimpleContent.PackageName = ce.PackageName
 		ce.ComplexType.SimpleContent.Parent = ce.Parent
@@ -25,7 +25,7 @@ func (ce *ComplexElement) Generate(targetPrefix string, namespaces map[string]st
 		if ce.ComplexType.SimpleContent.Extension.AttributeGroup != nil {
 			ce.ComplexType.AttributeGroups = append(ce.ComplexType.AttributeGroups, ce.ComplexType.SimpleContent.Extension.AttributeGroup)
 		}
-		ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.SimpleContent.Extension.Base)
+		ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.SimpleContent.Extension.Base, namespaces)
 	}
 	if ce.ComplexType.ComplexContent != nil {
 		ce.ComplexType.ComplexContent.PackageName = ce.PackageName
@@ -35,13 +35,13 @@ func (ce *ComplexElement) Generate(targetPrefix string, namespaces map[string]st
 		if ce.ComplexType.ComplexContent.Extension.AttributeGroup != nil {
 			ce.ComplexType.AttributeGroups = append(ce.ComplexType.AttributeGroups, ce.ComplexType.ComplexContent.Extension.AttributeGroup)
 		}
-		ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.ComplexContent.Extension.Base)
+		ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.ComplexContent.Extension.Base, namespaces)
 	}
 	ce.ComplexType.Imports = Append(ce.ComplexType.Imports, ce.ComplexType.Base, namespaces)
 	for _, a := range ce.ComplexType.Attributes {
 		a.PackageName = ce.PackageName
 		a.Name = Upper(a.Name)
-		a.Type = Replace(targetPrefix, a.Type)
+		a.Type = Replace(targetPrefix, a.Type, namespaces)
 		ce.ComplexType.Imports = Append(ce.ComplexType.Imports, a.Type, namespaces)
 	}
 	ce.ComplexType.Version = version

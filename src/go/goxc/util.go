@@ -67,15 +67,21 @@ func Parse(path, file, prefix string) (*Schema, error) {
 	return &schema, nil
 }
 
-func Replace(targetPrefix, t string) string {
+func Replace(targetPrefix, t string, namespaces map[string]string) string {
 	if t == "" {
 		return "string"
 	}
 	if strings.Contains(t, targetPrefix) && len(targetPrefix) > 0 {
 		return strings.Replace(t, targetPrefix + ":", "", -1)
 	}
+
 	if strings.Contains(t, ":") {
-		t = strings.Replace(t, ":", ".", -1)
+		ns, ok := namespaces[t[:strings.Index(t, ":")]]
+		if ok && ns == XML_SCHEMA {
+			t = strings.Replace(t, t[:strings.Index(t, ":")+1], "", -1)
+		} else {
+			t = strings.Replace(t, ":", ".", -1)
+		}
 	}
 	if IsBaseType(t) {
 		return "w3c." + Upper(t)

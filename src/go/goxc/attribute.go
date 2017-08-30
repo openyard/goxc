@@ -51,7 +51,7 @@ func (a *Attribute) finish() {
 }
 
 func (a *Attribute) prepareMe(targetPrefix string, namespaces map[string]string) {
-	a.Type = Replace(targetPrefix, a.Type)
+	a.Type = Replace(targetPrefix, a.Type, namespaces)
 	if strings.Contains(a.Type, ".") && !strings.Contains(a.Type, targetPrefix) {
 		a.Imports = Append(a.Imports, a.Type, namespaces)
 	}

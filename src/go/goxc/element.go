@@ -27,9 +27,9 @@ func (e *Element) Generate(targetPrefix string, namespaces map[string]string) {
 		e.OmitEmpty = ",omitempty"
 	}
 	if e.isSimple() {
-		e.Base = Replace(targetPrefix, e.SimpleType.Type)
+		e.Base = Replace(targetPrefix, e.SimpleType.Type, namespaces)
 		if e.SimpleType.isRestriction() {
-			e.Base = Replace(targetPrefix, e.SimpleType.Restriction.Base)
+			e.Base = Replace(targetPrefix, e.SimpleType.Restriction.Base, namespaces)
 		}
 		e.Imports = append(e.Imports, e.SimpleType.Imports...)
 	} else if e.isComplex() {
@@ -43,12 +43,12 @@ func (e *Element) Generate(targetPrefix string, namespaces map[string]string) {
 		a := &Abstract{PackageName: e.PackageName, Name: e.TypeName}
 		a.Generate(targetPrefix)
 	} else if e.Name != "" { // && !IsBaseType(e.Type)
-		e.Base = Replace(targetPrefix, e.Type)
+		e.Base = Replace(targetPrefix, e.Type, namespaces)
 		e.Imports = Append(e.Imports, e.Base, namespaces)
 		se := &SimpleElement{PackageName: e.PackageName, Name: e.TypeName, Type: e.Type, Imports: e.Imports}
-		se.Generate(targetPrefix)
+		se.Generate(targetPrefix, namespaces)
 	} else {
-		e.Base = Replace(targetPrefix, e.Ref)
+		e.Base = Replace(targetPrefix, e.Ref, namespaces)
 		e.TypeName = Name(e.Base)
 		//if strings.Contains(e.TypeName, ".") {
 		//	e.TypeName = e.Base[strings.Index(e.Base, ".")+1:]
