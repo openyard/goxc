@@ -23,5 +23,5 @@ func (ag *AttributeGroup) Generate(targetPrefix string, namespaces map[string]st
 		ag.Rev = rev
 		generateStruct(ag, "templates/attribute_group.tmpl", ag.PackageName, ag.Name, "attribute group")
 	}
-	ag.Ref = Replace(targetPrefix, ag.Ref)
+	ag.Ref = Replace(targetPrefix, ag.Ref, namespaces)
 }

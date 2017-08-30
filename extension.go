@@ -26,5 +26,5 @@ func (e *Extension) Generate(targetPrefix string, namespaces map[string]string) 
 		e.AttributeGroup.PackageName = e.PackageName
 		e.AttributeGroup.Generate(targetPrefix, namespaces)
 	}
-	e.Base = Replace(targetPrefix, e.Base)
+	e.Base = Replace(targetPrefix, e.Base, namespaces)
 }

@@ -30,7 +30,7 @@ func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string
 	if c.SimpleContent != nil {
 		c.SimpleContent.Name = c.Name
 		c.SimpleContent.PackageName = c.PackageName
-		c.Base = Replace(targetPrefix, c.SimpleContent.Extension.Base)
+		c.Base = Replace(targetPrefix, c.SimpleContent.Extension.Base, namespaces)
 		c.Imports = Append(c.Imports, c.Base, namespaces)
 		c.Attributes = c.SimpleContent.Extension.Attributes
 		if c.SimpleContent.Extension.AttributeGroup != nil {
@@ -38,14 +38,14 @@ func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string
 		}
 		c.SimpleContent.Generate(targetPrefix, namespaces)
 		for _, a := range c.SimpleContent.Extension.Attributes {
-			c.Imports = Append(c.Imports, Replace(targetPrefix, a.Type), namespaces)
+			c.Imports = Append(c.Imports, Replace(targetPrefix, a.Type, namespaces), namespaces)
 		}
 	}
 	if c.ComplexContent != nil {
 		if c.ComplexContent.Extension != nil {
 			c.ComplexContent.Name = c.Name
 			c.ComplexContent.PackageName = c.PackageName
-			c.Base = Replace(targetPrefix, c.ComplexContent.Extension.Base)
+			c.Base = Replace(targetPrefix, c.ComplexContent.Extension.Base, namespaces)
 			c.Imports = Append(c.Imports, c.Base, namespaces)
 			c.Attributes = c.ComplexContent.Extension.Attributes
 			if c.ComplexContent.Extension.AttributeGroup != nil {
@@ -56,7 +56,7 @@ func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string
 		if c.ComplexContent.Restriction != nil {
 			c.ComplexContent.Name = c.Name
 			c.ComplexContent.PackageName = c.PackageName
-			c.Base = Replace(targetPrefix, c.ComplexContent.Restriction.Base)
+			c.Base = Replace(targetPrefix, c.ComplexContent.Restriction.Base, namespaces)
 			c.Imports = Append(c.Imports, c.Base, namespaces)
 			c.ComplexContent.Generate(targetPrefix, namespaces)
 		}

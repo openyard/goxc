@@ -4,7 +4,10 @@ import (
 	"encoding/xml"
 	"os"
 	"path/filepath"
+	"fmt"
 )
+
+const XML_SCHEMA = "http://www.w3.org/2001/XMLSchema"
 
 type Schema struct {
 	XMLName         xml.Name          `xml:"http://www.w3.org/2001/XMLSchema schema"`
@@ -129,6 +132,7 @@ func (s *Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	s.Namespaces = map[string]string{}
 	for _, attr := range start.Attr {
 		if attr.Name.Space == "xmlns" {
+			fmt.Printf("%s - %s - %s\n",  attr.Name.Space,  attr.Name.Local,  attr.Value)
 			s.Namespaces[attr.Name.Local] = attr.Value
 		}
 	}
