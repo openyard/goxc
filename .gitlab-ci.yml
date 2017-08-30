@@ -24,7 +24,7 @@ goxc_build:
         # gocyclo -over 10 ../src/go/goxc
         - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X go/goxc.version=${CI_BUILD_REF_NAME}-${BUILD_NUMBER} -X go/goxc.rev=${CI_BUILD_REF} -X go/goxc.built=${BUILD_STAMP}" -o goxc ../src/go/goxc/main/
         - go install ../src/go/goxc/main/
-        - go tool vet -v -all -composites=false -shadow=true ../src/go/goxc/..
+        # - go tool vet -v -all -composites=false -shadow=true ../src/go/goxc
     artifacts:
         paths:
             - bin/goxc
