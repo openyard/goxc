@@ -14,6 +14,9 @@ stages:
 
 goxc_build:
     stage: build
+    image: golang:1.9
+    tags:
+      - shared, docker
     script:
         - mkdir -p bin
         - cd bin
@@ -34,6 +37,9 @@ goxc_build:
 
 goxc_release_build:
     stage: build
+    image: golang:1.9
+    tags:
+      - shared, docker
     script:
         - mkdir -p bin
         - cd bin
