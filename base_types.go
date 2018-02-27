@@ -17,7 +17,7 @@ func init() {
 	baseTypes = append(baseTypes, &BaseType{Name: "DateTime", Type: "string"})
 	baseTypes = append(baseTypes, &BaseType{Name: "Language", Type: "string"})
 	baseTypes = append(baseTypes, &BaseType{Name: "Integer", Type: "int"})
-	baseTypes = append(baseTypes, &BaseType{Name: "NonNegativeInteger", Type: "int"})
-	baseTypes = append(baseTypes, &BaseType{Name: "PositiveInteger", Type: "int"})
+	baseTypes = append(baseTypes, &BaseType{Name: "NonNegativeInteger", Type: "uint"})
+	baseTypes = append(baseTypes, &BaseType{Name: "PositiveInteger", Type: "uint"})
 	baseTypes = append(baseTypes, &BaseType{Name: "Boolean", Type: "bool"})
 }
