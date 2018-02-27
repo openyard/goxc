@@ -61,6 +61,11 @@ type Pattern struct {
 	Value   string   `xml:"value,attr"`
 }
 
+type MinInclusive struct {
+	XMLName xml.Name `xml:"minInclusive"`
+	Value   string   `xml:"value"`
+}
+
 type MaxInclusive struct {
 	XMLName xml.Name `xml:"maxInclusive"`
 	Value   string   `xml:"value"`

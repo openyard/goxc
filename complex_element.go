@@ -21,11 +21,13 @@ func (ce *ComplexElement) Generate(targetPrefix string, namespaces map[string]st
 		ce.ComplexType.SimpleContent.Parent = ce.Parent
 		ce.ComplexType.SimpleContent.Generate(targetPrefix, namespaces)
 
-		ce.ComplexType.Attributes = append(ce.ComplexType.Attributes, ce.ComplexType.SimpleContent.Extension.Attributes...)
-		if ce.ComplexType.SimpleContent.Extension.AttributeGroup != nil {
-			ce.ComplexType.AttributeGroups = append(ce.ComplexType.AttributeGroups, ce.ComplexType.SimpleContent.Extension.AttributeGroup)
+		if ce.ComplexType.SimpleContent.Extension != nil {
+			ce.ComplexType.Attributes = append(ce.ComplexType.Attributes, ce.ComplexType.SimpleContent.Extension.Attributes...)
+			if ce.ComplexType.SimpleContent.Extension.AttributeGroup != nil {
+				ce.ComplexType.AttributeGroups = append(ce.ComplexType.AttributeGroups, ce.ComplexType.SimpleContent.Extension.AttributeGroup)
+			}
+			ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.SimpleContent.Extension.Base, namespaces)
 		}
-		ce.ComplexType.Base = Replace(targetPrefix, ce.ComplexType.SimpleContent.Extension.Base, namespaces)
 	}
 	if ce.ComplexType.ComplexContent != nil {
 		ce.ComplexType.ComplexContent.PackageName = ce.PackageName

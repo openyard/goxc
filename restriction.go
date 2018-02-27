@@ -11,6 +11,7 @@ type Restriction struct {
 	Base                      string          `xml:"base,attr"`
 	Length                    *Length         `xml:"length,omitempty"`
 	Pattern                   *Pattern        `xml:"pattern,omitempty"`
+	MinInclusive              *MinInclusive   `xml:"minInclusive,omitempty"`
 	MaxInclusive              *MaxInclusive   `xml:"maxInclusive,omitempty"`
 	TotalDigits               *TotalDigits    `xml:"totalDigits,omitempty"`
 	FractionDigits            *FractionDigits `xml:"fractionDigits,omitempty"`
