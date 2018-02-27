@@ -48,9 +48,9 @@ func Name(t string) string {
 
 func PackageName(ns string) string {
 	if strings.Contains(ns, "http://") {
-		return strings.Replace(strings.ToLower(ns[strings.LastIndex(ns, "/") + 1:]), "#", "", -1)
+		return strings.Replace(strings.ToLower(ns[strings.LastIndex(ns, "/")+1:]), "#", "", -1)
 	}
-	return strings.ToLower(ns[strings.LastIndex(ns, ":") + 1:])
+	return strings.Replace(strings.ToLower(ns[strings.LastIndex(ns, ":")+1:]), "$", "", -1)
 }
 
 func Parse(path, file, prefix string) (*Schema, error) {
@@ -72,7 +72,7 @@ func Replace(targetPrefix, t string, namespaces map[string]string) string {
 		return "string"
 	}
 	if strings.Contains(t, targetPrefix) && len(targetPrefix) > 0 {
-		return strings.Replace(t, targetPrefix + ":", "", -1)
+		return strings.Replace(t, targetPrefix+":", "", -1)
 	}
 
 	if strings.Contains(t, ":") {
@@ -108,7 +108,7 @@ func stdout(s string) {
 }
 
 func generateStruct(data interface{}, templateName, packageName, name, kind string) {
-	fileName := fmt.Sprintf("%s/%s.go", packagePrefix + packageName, name)
+	fileName := fmt.Sprintf("%s/%s.go", packagePrefix+packageName, name)
 
 	if _, err := os.Stat(fileName); err == nil {
 		stdout(fmt.Sprintf("file exists already %q", fileName))
