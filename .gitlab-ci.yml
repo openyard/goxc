@@ -1,0 +1,48 @@
+before_script:
+    - export WD=`pwd`
+    - export GOPATH="$WD"
+    - export PATH="$GOROOT/bin:$WD/bin:$PATH"
+    - export BUILD_STAMP=`date -u +%Y/%m/%d\_%H:%M:%S\_%Z` # -ldflags -X doesn't like spaces
+    - export BUILD_NUMBER=`echo $BUILD_STAMP | sed -e 's/^..//g' | sed -e 's/....$//g' | sed -e 's/\//./g' | sed -e 's/_/-/g' | sed -e 's/://g'`
+    - echo $GOPATH
+    - echo $PATH
+    - echo $BUILD_STAMP
+    - echo $BUILD_NUMBER
+
+stages:
+    - build
+
+goxc_build:
+    stage: build
+    script:
+        - mkdir -p bin
+        - cd bin
+        - go get -v github.com/fzipp/gocyclo
+        - go test -cover -v ../src/go/goxc
+        # gocyclo -over 10 ../src/go/goxc
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X go/goxc.version=${CI_BUILD_REF_NAME}-${BUILD_NUMBER} -X go/goxc.rev=${CI_BUILD_REF} -X go/goxc.built=${BUILD_STAMP}" -o goxc ../src/go/goxc/main/
+        - go install ../src/go/goxc/main/
+        # - go tool vet -v -all -composites=false -shadow=true ../src/go/goxc
+    artifacts:
+        paths:
+            - bin/goxc
+        name: "goxc-${CI_BUILD_REF_NAME}-`echo ${BUILD_NUMBER}`"
+        expire_in: 1 week
+        when: on_success
+    except:
+        - tags
+
+goxc_release_build:
+    stage: build
+    script:
+        - mkdir -p bin
+        - cd bin
+        - go build -installsuffix netgo -tags netgo -a -ldflags "-s -X go/goxc.version=`echo \"${CI_BUILD_TAG}\" | sed -e 's/goxc-//'` -X go/goxc.rev=${CI_BUILD_REF} -X go/goxc.built=${BUILD_STAMP}" -o goxc ../src/go/goxc/main
+    artifacts:
+        paths:
+            - bin/goxc
+        name: "${CI_BUILD_TAG}"
+        when: on_success
+    only:
+        - tags
+        - /^goxc-*$/
