@@ -1,8 +1,9 @@
 package goxc_test
 
 import (
-	"go/goxc"
 	"testing"
+
+	"github.com/openyard/goxc"
 )
 
 func TestNamespace(t *testing.T) {

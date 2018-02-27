@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"go/goxc"
+	"github.com/openyard/goxc"
 )
 
 func main() {

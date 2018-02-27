@@ -1,8 +1,9 @@
 package goxc_test
 
 import (
-	"go/goxc"
 	"testing"
+
+	"github.com/openyard/goxc"
 )
 
 func TestAppend(t *testing.T) {

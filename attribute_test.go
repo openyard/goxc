@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"go/goxc"
+	"github.com/openyard/goxc"
 )
 
 func TestAttributeOutput(t *testing.T) {
