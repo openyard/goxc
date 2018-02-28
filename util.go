@@ -50,7 +50,10 @@ func PackageName(ns string) string {
 	if strings.Contains(ns, "http://") {
 		return strings.Replace(strings.ToLower(ns[strings.LastIndex(ns, "/")+1:]), "#", "", -1)
 	}
-	return strings.Replace(strings.ToLower(ns[strings.LastIndex(ns, ":")+1:]), "$", "", -1)
+	p := strings.ToLower(ns[strings.LastIndex(ns, ":")+1:])
+	p = strings.Replace(p, "$", "", -1)
+	p = strings.Replace(p, ".", "", -1)
+	return p
 }
 
 func Parse(path, file, prefix string) (*Schema, error) {
