@@ -19,6 +19,7 @@ type ComplexType struct {
 	Imports         []*Import
 	PackageName     string
 	Base, Parent    string
+	Array           string
 }
 
 func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string) {

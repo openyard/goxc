@@ -5,26 +5,30 @@ import (
 )
 
 type Element struct {
-	XMLName                 xml.Name     `xml:"element"`
-	Name                    string       `xml:"name,attr"`
-	Abstract                bool         `xml:"abstract,attr"`
-	Type                    string       `xml:"type,attr"`
-	Ref                     string       `xml:"ref,attr"`
-	MinOccurs               string       `xml:"minOccurs,attr"`
-	MaxOccurs               string       `xml:"maxOccurs,attr"`
-	Annotation              *Annotation  `xml:"annotation,omitempty"`
-	SimpleType              *SimpleType  `xml:"simpleType,omitempty"`
-	ComplexType             *ComplexType `xml:"complexType,omitempty"`
-	PackageName, Namespace  string
-	Base, Parent, OmitEmpty string
-	TypeName 		string
-	Imports                 []*Import
+	XMLName                xml.Name     `xml:"element"`
+	Name                   string       `xml:"name,attr"`
+	Abstract               bool         `xml:"abstract,attr"`
+	Type                   string       `xml:"type,attr"`
+	Ref                    string       `xml:"ref,attr"`
+	MinOccurs              string       `xml:"minOccurs,attr"`
+	MaxOccurs              string       `xml:"maxOccurs,attr"`
+	Annotation             *Annotation  `xml:"annotation,omitempty"`
+	SimpleType             *SimpleType  `xml:"simpleType,omitempty"`
+	ComplexType            *ComplexType `xml:"complexType,omitempty"`
+	PackageName, Namespace string
+	Base, Parent           string
+	OmitEmpty, Array       string
+	TypeName               string
+	Imports                []*Import
 }
 
 func (e *Element) Generate(targetPrefix string, namespaces map[string]string) {
 	e.TypeName = Upper(e.Name)
 	if e.isOptional() {
 		e.OmitEmpty = ",omitempty"
+	}
+	if e.isUnbounded() {
+		e.Array = "[]"
 	}
 	if e.isSimple() {
 		e.Base = Replace(targetPrefix, e.SimpleType.Type, namespaces)
@@ -34,7 +38,7 @@ func (e *Element) Generate(targetPrefix string, namespaces map[string]string) {
 		e.Imports = append(e.Imports, e.SimpleType.Imports...)
 	} else if e.isComplex() {
 		e.ComplexType.Name = e.Parent + e.TypeName
-		ce := &ComplexElement{PackageName: e.PackageName, Parent: e.Parent + e.Name, ComplexType: e.ComplexType}
+		ce := &ComplexElement{PackageName: e.PackageName, Parent: e.Parent + e.Name, ComplexType: e.ComplexType, Array: e.Array}
 		ce.Generate(targetPrefix, namespaces)
 		e.Base = e.ComplexType.Name
 		e.Imports = append(e.Imports, ce.ComplexType.Imports...)
@@ -67,6 +71,10 @@ func (e *Element) isComplex() bool {
 
 func (e *Element) isOptional() bool {
 	return e.MinOccurs == "0"
+}
+
+func (e *Element) isUnbounded() bool {
+	return e.MaxOccurs == "unbounded"
 }
 
 func (e *Element) isRef() bool {

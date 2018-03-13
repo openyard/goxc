@@ -11,7 +11,7 @@ type {{.Name}} struct {
         {{- .TypeName}} {{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
     {{end -}}
     {{range .Elements}}
-        {{- .TypeName}} {{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
+        {{- .TypeName}} {{.Array}}{{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
     {{end -}}
     {{range .Refs}}
         {{- .TypeName}} {{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`

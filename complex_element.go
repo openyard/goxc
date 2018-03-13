@@ -2,12 +2,14 @@ package goxc
 
 type ComplexElement struct {
 	PackageName, Parent string
+	Array               string
 	ComplexType         *ComplexType
 }
 
 func (ce *ComplexElement) Generate(targetPrefix string, namespaces map[string]string) {
 	if ce.ComplexType.Sequence != nil || ce.ComplexType.Choice != nil {
 		ce.ComplexType.PackageName = ce.PackageName
+		ce.ComplexType.Array = ce.Array
 		ce.ComplexType.Generate(targetPrefix, namespaces)
 		return
 	}
