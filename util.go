@@ -132,6 +132,8 @@ func generateStruct(data interface{}, templateName, packageName, name, kind stri
 	stdout(fmt.Sprintf("generating %s/%s [%s]", packageName, name, kind))
 	t := template.New(kind)
 	t, _ = t.Parse(string(tmpl[:]))
-	t.Execute(f, data)
+	if err := t.Execute(f, data); err != nil {
+		stdout(fmt.Sprintf("error generating %s/%s [%s]: %s", packageName, name, kind, err.Error()))
+	}
 	counter++
 }

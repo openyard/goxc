@@ -5,7 +5,7 @@ import "os"
 func withTempDir(f func(path string), path string) {
 	tempDir := os.TempDir() + "/" + path
 	_ = os.Mkdir(tempDir, 0775)
-	defer os.RemoveAll(tempDir)
+	//defer os.RemoveAll(tempDir)
 	f(tempDir)
 }
 

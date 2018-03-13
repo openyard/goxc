@@ -9,6 +9,7 @@ type Element struct {
 	Name                   string       `xml:"name,attr"`
 	Abstract               bool         `xml:"abstract,attr"`
 	Type                   string       `xml:"type,attr"`
+	SubstitutionGroup      string       `xml:"substitutionGroup,attr"`
 	Ref                    string       `xml:"ref,attr"`
 	MinOccurs              string       `xml:"minOccurs,attr"`
 	MaxOccurs              string       `xml:"maxOccurs,attr"`
@@ -46,7 +47,19 @@ func (e *Element) Generate(targetPrefix string, namespaces map[string]string) {
 		e.Base = e.Type
 		a := &Abstract{PackageName: e.PackageName, Name: e.TypeName}
 		a.Generate(targetPrefix)
-	} else if e.Name != "" { // && !IsBaseType(e.Type)
+	} else if e.Name != "" && e.Parent == "" && e.SubstitutionGroup == "" {
+		rt := &RootType{PackageName: e.PackageName, Name: e.TypeName, XMLName: e.Name, Type: e.Type, TargetPrefix: targetPrefix, Imports: e.Imports, Namespaces: make([]*RootNamespace, 0)}
+		for k, v := range namespaces {
+			if k == "w3c" {
+				continue
+			}
+			if k == targetPrefix {
+				continue
+			}
+			rt.Namespaces = append(rt.Namespaces, &RootNamespace{Name: v, Prefix: k})
+		}
+		rt.Generate(targetPrefix, namespaces)
+	} else if e.Name != "" && e.Parent != "" { // && !IsBaseType(e.Type)
 		e.Base = Replace(targetPrefix, e.Type, namespaces)
 		e.Imports = Append(e.Imports, e.Base, namespaces)
 		se := &SimpleElement{PackageName: e.PackageName, Name: e.TypeName, Type: e.Type, Imports: e.Imports}

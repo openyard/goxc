@@ -1,0 +1,16 @@
+// Generated with goxc v{{.Version}} - rev {{.Rev}}
+package {{.PackageName}}
+
+import "encoding/xml"
+{{range .Imports}}
+    import {{.Alias}} "{{.Package}}"
+{{end}}
+
+// root type
+type {{.Name}} struct {
+    {{.Type}}
+    XMLName xml.Name `xml:"{{.TargetPrefix}}:{{.XMLName}}"`
+    SchemaLocation string `xml:"xsi:schemaLocation,attr"`
+    XMLNS          string `xml:"xmlns:{{.TargetPrefix}},attr"`
+    XSI            string `xml:"xmlns:xsi,attr"`
+}
