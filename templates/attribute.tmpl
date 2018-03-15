@@ -5,5 +5,5 @@ package {{.PackageName}}
 {{end}}
 // attribute type
 type {{.TypeName}} struct {
-	Value {{.Type}} `xml:"{{.Name}},attr"`
+	Value *{{.Type}} `xml:"{{.Name}},attr"`
 }

@@ -7,6 +7,6 @@ package {{.PackageName}}
 // attribute group
 type {{.Name}} struct {
 {{range .Attributes}}
-    {{.TypeName}} {{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
+    {{.TypeName}} *{{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
 {{end}}
 }

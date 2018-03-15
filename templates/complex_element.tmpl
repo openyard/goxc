@@ -6,9 +6,9 @@ package {{.PackageName}}
 {{end}}
 // complex element
 type {{.Name}} struct {
-    Value {{.Base}} `xml:",chardata"`
+    Value *{{.Base}} `xml:",chardata"`
     {{range .Attributes}}
-        {{- .TypeName}} {{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
+        {{- .TypeName}} *{{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
     {{end}}
     {{range .AttributeGroups}}
         {{- .Ref}}

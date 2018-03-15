@@ -9,9 +9,8 @@ type RootType struct {
 	Class
 	Name, XMLName, Type string
 	PackageName         string
-	TargetPrefix        string
+	TargetNamespace     string
 	Imports             []*Import
-	Namespaces          []*RootNamespace
 }
 
 func (s *RootType) Generate(targetPrefix string, namespaces map[string]string) {

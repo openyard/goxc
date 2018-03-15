@@ -9,8 +9,7 @@ import "encoding/xml"
 // root type
 type {{.Name}} struct {
     {{.Type}}
-    XMLName xml.Name `xml:"{{.TargetPrefix}}:{{.XMLName}}"`
+    XMLName xml.Name `xml:"{{.TargetNamespace}} {{.XMLName}}"`
     SchemaLocation string `xml:"xsi:schemaLocation,attr"`
-    XMLNS          string `xml:"xmlns:{{.TargetPrefix}},attr"`
     XSI            string `xml:"xmlns:xsi,attr"`
 }

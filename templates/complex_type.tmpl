@@ -8,13 +8,13 @@ package {{.PackageName}}
 type {{.Name}} struct {
     {{.Base}}
     {{range .Attributes}}
-        {{- .TypeName}} {{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
+        {{- .TypeName}} *{{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
     {{end -}}
     {{range .Elements}}
-        {{- .TypeName}} {{.Array}}{{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
+        {{- .TypeName}} {{.Array}}*{{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
     {{end -}}
     {{range .Refs}}
-        {{- .TypeName}} {{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
+        {{- .TypeName}} *{{.Base}} `xml:"{{.Namespace}}{{.Name}}{{.OmitEmpty}}"`
     {{end -}}
     {{range .AttributeGroups}}
         {{- .Ref}}
