@@ -3,7 +3,7 @@ package {{.PackageName}}
 {{range .Imports}}
     import {{.Alias}} "{{.Package}}"
 {{end}}
-// attribute type
+// Attribute
 type {{.TypeName}} struct {
 	Value *{{.Type}} `xml:"{{.Name}},attr"`
 }

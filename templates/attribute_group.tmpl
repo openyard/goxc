@@ -4,7 +4,7 @@ package {{.PackageName}}
 {{range .Imports -}}
     import {{.Alias}} "{{.Package}}"
 {{end}}
-// attribute group
+// AttributeGroup
 type {{.Name}} struct {
 {{range .Attributes}}
     {{.TypeName}} *{{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`

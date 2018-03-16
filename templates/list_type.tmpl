@@ -3,7 +3,7 @@ package {{.PackageName}}
 {{range .Imports}}
     import {{.Alias}} "{{.Package}}"
 {{end}}
-// list type
+// ListType
 type {{.Name}} struct {
     Value []*{{.Type}} `xml:",chardata"`
 }

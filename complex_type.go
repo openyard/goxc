@@ -1,6 +1,8 @@
 package goxc
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+)
 
 type ComplexType struct {
 	Class
@@ -25,6 +27,7 @@ type ComplexType struct {
 func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string) {
 	for _, attribute := range c.Attributes {
 		attribute.PackageName = c.PackageName
+		attribute.Parent = c.Parent + c.Name
 		attribute.Generate(targetPrefix, namespaces)
 		c.Imports = Append(c.Imports, attribute.Type, namespaces)
 	}

@@ -4,7 +4,7 @@ package {{.PackageName}}
 {{range .Imports -}}
     import {{.Alias}} "{{.Package}}"
 {{end}}
-// complex element
+// ComplexElement
 type {{.Name}} struct {
     Value *{{.Base}} `xml:",chardata"`
     {{range .Attributes}}

@@ -6,7 +6,7 @@ import "encoding/xml"
     import {{.Alias}} "{{.Package}}"
 {{end}}
 
-// root type
+// RootElement
 type {{.Name}} struct {
     {{.Type}}
     XMLName xml.Name `xml:"{{.TargetNamespace}} {{.XMLName}}"`

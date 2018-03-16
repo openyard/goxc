@@ -4,7 +4,7 @@ package {{.PackageName}}
 {{range .Imports -}}
     import {{.Alias}} "{{.Package}}"
 {{end -}}
-// complex type
+// ComplexType
 type {{.Name}} struct {
     {{.Base}}
     {{range .Attributes}}
@@ -23,3 +23,37 @@ type {{.Name}} struct {
         Any []*w3c.Any
     {{end -}}
 }
+
+{{if .Base}}
+func New{{.Name}}() *{{.Base}} {
+    return new({{.Base}})
+}
+{{else}}
+func New{{.Name}}() *{{.Name}} {
+    return new({{.Name}})
+}
+{{end}}
+
+{{range .Attributes}}
+func (me *{{.Parent}}) Set{{.TypeName}}(value *{{.Type}}) {
+    me.{{.TypeName}} = value
+}
+{{end -}}
+
+{{range .Elements}}
+{{if .Array}}
+func (me *{{.Parent}}) Add{{.TypeName}}(value *{{.Base}}) {
+    me.{{.TypeName}} = append(me.{{.TypeName}}, value)
+}
+{{else}}
+func (me *{{.Parent}}) Set{{.TypeName}}(value *{{.Base}}) {
+    me.{{.TypeName}} = value
+}
+{{end}}
+{{end -}}
+
+{{range .Refs}}
+func (me *{{.Parent}}) Set{{.TypeName}}(value *{{.Base}}) {
+    me.{{.TypeName}} = value
+}
+{{end -}}

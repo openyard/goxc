@@ -16,7 +16,7 @@ type Attribute struct {
 	SimpleType        *SimpleType `xml:"simpleType,omitempty"`
 	PackageName       string
 	Parent, OmitEmpty string
-	TypeName 	  string
+	TypeName          string
 	Imports           []*Import
 }
 
@@ -43,7 +43,9 @@ func (a *Attribute) hasSimpleType() bool {
 }
 
 func (a *Attribute) finish() {
-	a.Imports = a.SimpleType.Imports
+	if a.PackageName != a.SimpleType.PackageName {
+		a.Imports = a.SimpleType.Imports
+	}
 	a.Type = a.SimpleType.Type
 	if a.hasParent() {
 		a.Type = a.SimpleType.Name
