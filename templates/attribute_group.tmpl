@@ -10,3 +10,13 @@ type {{.Name}} struct {
     {{.TypeName}} *{{.Type}} `xml:"{{.Name}},attr{{.OmitEmpty}}"`
 {{end}}
 }
+
+func New{{.Name}}() *{{.Name}} {
+    return new({{.Name}})
+}
+
+{{range .Attributes}}
+func (me *{{.Parent}}) Set{{.TypeName}}(value *{{.Type}}) {
+    me.{{.TypeName}} = value
+}
+{{end -}}

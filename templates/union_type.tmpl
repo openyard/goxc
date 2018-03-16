@@ -5,3 +5,7 @@ package {{.PackageName}}
 type {{.Name}} struct {
     {{.Type}}
 }
+
+func New{{.Name}}() *{{.Name}} {
+    return new({{.Name}})
+}

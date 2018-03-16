@@ -7,3 +7,7 @@ package {{.PackageName}}
 
 // SimpleType
 type {{.Name}} {{.Type}}
+
+func New{{.Name}}() *{{.Name}} {
+    return new({{.Name}})
+}

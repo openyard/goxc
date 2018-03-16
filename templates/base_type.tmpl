@@ -7,3 +7,8 @@ package {{.PackageName}}
 
 // BaseType
 type {{.Name}} {{.Type}}
+
+func New{{.Name}}(value {{.Type}}) *{{.Name}} {
+    me := (*{{.Name}})(&value)
+    return me
+}

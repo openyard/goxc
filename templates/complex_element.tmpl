@@ -14,3 +14,13 @@ type {{.Name}} struct {
         {{- .Ref}}
     {{end -}}
 }
+
+func New{{.Name}}() *{{.Name}} {
+    return new({{.Name}})
+}
+
+{{range .Attributes}}
+func (me *{{.Parent}}) Set{{.TypeName}}(value *{{.Type}}) {
+    me.{{.TypeName}} = value
+}
+{{end -}}

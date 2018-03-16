@@ -7,3 +7,11 @@ package {{.PackageName}}
 type {{.TypeName}} struct {
 	Value *{{.Type}} `xml:"{{.Name}},attr"`
 }
+
+func New{{.TypeName}}() *{{.TypeName}} {
+    return new({{.TypeName}})
+}
+
+func (me *{{.TypeName}}) SetValue(value *{{.Type}}) {
+    me.Value = value
+}

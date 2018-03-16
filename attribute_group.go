@@ -15,6 +15,7 @@ type AttributeGroup struct {
 func (ag *AttributeGroup) Generate(targetPrefix string, namespaces map[string]string) {
 	for _, a := range ag.Attributes {
 		a.PackageName = ag.PackageName
+		a.Parent = ag.Name
 		a.Generate(targetPrefix, namespaces)
 		ag.Imports = Append(ag.Imports, a.Type, namespaces)
 	}

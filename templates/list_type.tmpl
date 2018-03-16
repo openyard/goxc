@@ -7,3 +7,11 @@ package {{.PackageName}}
 type {{.Name}} struct {
     Value []*{{.Type}} `xml:",chardata"`
 }
+
+func New{{.Name}}() *{{.Name}} {
+    return new({{.Name}})
+}
+
+func (me *{{.Name}}) AddValue(value *{{.Type}}) {
+    me.Value = append(me.Value, value)
+}
