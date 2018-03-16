@@ -49,6 +49,11 @@ func (me *{{.Parent}}) Add{{.TypeName}}(value *{{.Base}}) {
 func (me *{{.Parent}}) Set{{.TypeName}}(value *{{.Base}}) {
     me.{{.TypeName}} = value
 }
+
+func (me *{{.Parent}}) Add{{.TypeName}}() *{{.Base}}{
+    me.{{.TypeName}} = new({{.Base}})
+    return me.{{.TypeName}}
+}
 {{end}}
 {{end -}}
 
@@ -57,3 +62,4 @@ func (me *{{.Parent}}) Set{{.TypeName}}(value *{{.Base}}) {
     me.{{.TypeName}} = value
 }
 {{end -}}
+

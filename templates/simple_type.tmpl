@@ -8,6 +8,7 @@ package {{.PackageName}}
 // SimpleType
 type {{.Name}} {{.Type}}
 
-func New{{.Name}}() *{{.Name}} {
-    return new({{.Name}})
+func New{{.Name}}(value *{{.Type}}) *{{.Name}} {
+	me := (*{{.Name}})(value)
+	return me
 }
