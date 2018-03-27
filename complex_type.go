@@ -55,6 +55,23 @@ func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string
 			if c.ComplexContent.Extension.AttributeGroup != nil {
 				c.AttributeGroups = append(c.AttributeGroups, c.ComplexContent.Extension.AttributeGroup)
 			}
+			if c.ComplexContent.Extension.Sequence != nil {
+				if c.ComplexContent.Extension.Sequence.Sequence != nil {
+					for _, element := range c.ComplexContent.Extension.Sequence.Sequence.Elements {
+						c.Append(element, namespaces)
+						c.Imports = Append(c.Imports, element.Base, namespaces)
+					}
+				}
+				for _, element := range c.ComplexContent.Extension.Sequence.Elements {
+					c.Append(element, namespaces)
+					c.Imports = Append(c.Imports, element.Base, namespaces)
+				}
+				for _, choice := range c.ComplexContent.Extension.Sequence.Choices {
+					for _, element := range choice.Elements {
+						c.Append(element, namespaces)
+					}
+				}
+			}
 			c.ComplexContent.Generate(targetPrefix, namespaces)
 		}
 		if c.ComplexContent.Restriction != nil {
@@ -69,6 +86,12 @@ func (c *ComplexType) Generate(targetPrefix string, namespaces map[string]string
 		c.Sequence.PackageName = c.PackageName
 		c.Sequence.Parent = c.Name
 		c.Sequence.Generate(targetPrefix, namespaces)
+		if c.Sequence.Sequence != nil {
+			for _, element := range c.Sequence.Sequence.Elements {
+				c.Append(element, namespaces)
+				c.Imports = Append(c.Imports, element.Base, namespaces)
+			}
+		}
 		for _, element := range c.Sequence.Elements {
 			c.Append(element, namespaces)
 			c.Imports = Append(c.Imports, element.Base, namespaces)
